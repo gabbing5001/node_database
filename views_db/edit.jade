@@ -1,0 +1,25 @@
+doctype html 
+html 
+    head
+        meta(charset='utf-8')
+    body
+        h1 
+            a(href='/topic') Server Side JavaScript
+        ul 
+            each topic in topics 
+              li
+                a(href='/topic/'+topic.id)= topic.title
+        article
+            | EditForm
+            each detail in details 
+                form(action='/topic/update/'+detail.id method='post')
+                    p
+                        input(type='text' name='title' placeholder='title' value=detail.title)
+                    p
+                        textarea(name='description' placeholder='description')
+                            =detail.description
+                    p
+                        input(type='text' name='author' placeholder='author' value=detail.author)    
+                    p
+                        input(type='submit' value='수정')
+    

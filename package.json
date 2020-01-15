@@ -1,0 +1,19 @@
+{
+  "name": "server_js",
+  "version": "1.0.0",
+  "description": "Server side javascript tutorials",
+  "main": "helloworld.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jade": "^1.11.0",
+    "pg": "^7.17.0",
+    "pg-format": "^1.0.4",
+    "underscore": "^1.9.1"
+  }
+}
