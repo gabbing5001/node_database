@@ -1,6 +1,18 @@
 doctype html 
 html 
     head
+        script. 
+                function update(){
+                    var title = document.getElementById("title").value;
+                    var description = document.getElementById("description").value;
+                    var author = document.getElementById("author").value;
+                    if(!title || !description || !author){
+                        alert("입력하지 않은 값 존재");
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
         meta(charset='utf-8')
         meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
         link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
@@ -26,18 +38,18 @@ html
         article.card.border-primary
             h2.card-header Edit
             each detail in details 
-                form(action='/topic/update/'+detail.id method='post').card-body
+                form(action='/topic/update/'+detail.id method='post' onSubmit="return update()").card-body
                     div.form-group
                         h6 Title
-                        input(type='text' name='title' placeholder='title' value=detail.title).form-control
+                        input(type='text' name='title' placeholder='title' value=detail.title)#title.form-control
                     div.form-group
                         h6 Description
-                        textarea(name='description' placeholder='description').form-control
+                        textarea(name='description' placeholder='description')#description.form-control
                             =detail.description
                     div.row
                         div.form-group.col-6
                             h6 Author
-                            input(type='text' name='author' placeholder='author' value=detail.author).form-control    
+                            input(type='text' name='author' placeholder='author' value=detail.author)#author.form-control    
                     div.form-group
-                        input(type='submit' value='수정').btn.btn-primary
+                        button#updateBtn.btn.btn-primary 수정
     
