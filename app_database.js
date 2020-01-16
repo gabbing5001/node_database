@@ -16,6 +16,7 @@ const client = new Client({
 });
 client.connect();
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static("public")); //bootstrap 사용하려면 추가해야해 정적파일 경로
 
 app.locals.pretty = true; //html이 줄바꿈이 안되서 템플릿 줄바꿈 하기 위한 설정
 app.set("views", "./views_db"); //익스프레스에 설정 뷰파일 위치
