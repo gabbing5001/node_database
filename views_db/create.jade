@@ -1,6 +1,18 @@
 doctype html 
 html 
     head
+        script. 
+            function create(){
+                var title = document.getElementById("title").value;
+                var description = document.getElementById("description").value;
+                var author = document.getElementById("author").value;
+                if(!title || !description || !author){
+                    alert("입력하지 않은 값 존재");
+                    return false;
+                } else {
+                    return true;
+                }
+            }
         meta(charset='utf-8')
         meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
         link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
@@ -25,16 +37,16 @@ html
                     a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
         article.card.border-primary
             h2.card-header create
-            form(action='/topic/create' method='post').card-body
+            form(action='/topic/create' method='post' onSubmit="return create()").card-body
                 div.form-group
                     h6 Title
-                    input(type='text' name='title' placeholder='title').form-control
+                    input(type='text' name='title' placeholder='title')#title.form-control
                 div.form-group
                     h6 Description
-                    textarea(name='description' placeholder='description').form-control
+                    textarea(name='description' placeholder='description')#description.form-control
                 div.row
                     div.form-group.col-6
                         h6 Author
-                        input(type='text' name='author' placeholder='author').form-control    
+                        input(type='text' name='author' placeholder='author')#author.form-control    
                 div.form-group
-                    input(type='submit' value='추가').btn.btn-primary
+                    button#createBtn.btn.btn-primary 추가
