@@ -2,20 +2,39 @@ doctype html
 html 
     head
         meta(charset='utf-8')
+        meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+        link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+        link(rel="stylesheet", href="/bootstrap/css/starter-template.css")
+        link(rel='canonical', href="https://getbootstrap.com/docs/4.4/examples/starter-template/")
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+        script(src='/bootstrap/js/bootstrap.min.js')
     body
+        nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
+            div.navbar-brand Database node 
         h1 
             a(href='/topic') Server Side JavaScript
-        ul 
+        ul.list-group  
             each topic in topics 
-              li
-                a(href='/topic/'+topic.id)= topic.title
-        article
-            form(action='/topic/create' method='post')
-                p
-                    input(type='text' name='title' placeholder='title')
-                p
-                    textarea(name='description' placeholder='description')
-                p
-                    input(type='text' name='author' placeholder='author')    
-                p
-                    input(type='submit' value='추가')
+                if details
+                    each detail in details
+                        if detail.id == topic.id
+                            a(href='/topic/'+topic.id).list-group-item.list-group-item-action.active= topic.title
+                        else
+                            a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
+                else
+                    a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
+        article.card.border-primary
+            h2.card-header create
+            form(action='/topic/create' method='post').card-body
+                div.form-group
+                    h6 Title
+                    input(type='text' name='title' placeholder='title').form-control
+                div.form-group
+                    h6 Description
+                    textarea(name='description' placeholder='description').form-control
+                div.row
+                    div.form-group.col-6
+                        h6 Author
+                        input(type='text' name='author' placeholder='author').form-control    
+                div.form-group
+                    input(type='submit' value='추가').btn.btn-primary
