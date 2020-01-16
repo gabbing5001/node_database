@@ -175,7 +175,7 @@ app.get("/topic/:id", function(req, res) {
             //리스트에 전체 배열 넣기
             list.push(res3.rows[i]);
           }
-          res.render("view", { details: res2.rows, topics: list });
+          res.render("detail", { details: res2.rows, topics: list });
         }
       });
     }

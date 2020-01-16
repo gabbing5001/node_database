@@ -11,22 +11,20 @@ html
     body
         nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
             div.navbar-brand Database node 
-
-
         h1 
             a(href='/topic') Server Side JavaScript
-        ul.list-group 
-            each topic in topics 
-                if details
-                    each detail in details
-                        if detail.id == topic.id
-                            a(href='/topic/'+topic.id).list-group-item.list-group-item-action.active= topic.title
-                        else
-                            a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
-                else
-                    a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
+        h3 Detail
         article.card.border-primary
-            h2.card-header welcome
-            div.card-body
-                p.card-text This is server side javascript tutorial
-                a(href='/topic/create').card-link create
+            if details
+                each detail in details 
+                    h2.card-header= detail.title
+                    div.card-body
+                        p.card-text=detail.description 
+                        a(href='/topic/create').card-link create
+                        a(href='/topic/update/' + detail.id).card-link update
+                        a(href='/topic/delete/' + detail.id).card-link delete
+            else
+                h2.card-header welcome
+                div.card-body
+                    p.card-text This is server side javascript tutorial
+                    a(href='/topic/create').card-link create

@@ -25,16 +25,7 @@ html
             div.navbar-brand Database node
         h1 
             a(href='/topic') Server Side JavaScript
-        ul.list-group 
-            each topic in topics 
-                if details
-                        each detail in details
-                            if detail.id == topic.id
-                                a(href='/topic/'+topic.id).list-group-item.list-group-item-action.active= topic.title
-                            else
-                                a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
-                    else
-                        a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
+        h3 Update
         article.card.border-primary
             h2.card-header Edit
             each detail in details 
