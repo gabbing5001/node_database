@@ -4,6 +4,8 @@ var bodyParser = require("body-parser"); //body에 있는 값에 접근하기 �
 var fs = require("fs");
 const { Pool, Client } = require("pg"); //postgres를 사용하기 위한 모듈
 var format = require("pg-format");
+var paginate = require("express-paginate"); //paging 처리 해보자
+var pagination = require("pagination");
 
 //postgres db와 연결
 //node_test디비에 접근 한다는 소리
@@ -15,6 +17,7 @@ const client = new Client({
   port: 5432
 });
 client.connect();
+app.use(paginate.middleware(10, 50));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("public")); //bootstrap 사용하려면 추가해야해 정적파일 경로
 
@@ -143,14 +146,29 @@ app.post("/topic/delete/:id", function(req, res) {
 });
 
 app.get("/topic", function(req, res) {
+  var nowPage = req.query.nowPage; //쿼리로 날아온 현재 페이지 저장
   //전체 리스트를 띄우는 기본 리스트 화면
-  var sql = "SELECT id, title FROM topic ORDER BY id";
-  client.query(sql, function(err, res2) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("view", { topics: res2.rows });
-    }
+  var sqlCnt = "select count(*) from topic";
+  var sql = "SELECT id, title FROM topic ORDER BY id limit 5 offset $1"; //offset 사용시 +1 열부터 limit 갯수만큼 가져옴
+  client.query(sqlCnt, function(err, res3) {
+    if (nowPage == null) nowPage = 1;
+    nowPage = Number(nowPage); //계산을 위해서 형변환
+    const page = nowPage * 5 - 5; //시작열
+    client.query(sql, [page], function(err, res2) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (nowPage == null || nowPage == "" || nowPage <= 1) nowPage = 1;
+        var totalCnt = res3.rows;
+        var total = totalCnt[0].count / 5;
+
+        res.render("view", {
+          topics: res2.rows,
+          totalCnt: total,
+          nowPage: nowPage
+        });
+      }
+    });
   });
 });
 app.get("/topic/:id", function(req, res) {
