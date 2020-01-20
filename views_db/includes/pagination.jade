@@ -1,0 +1,25 @@
+
+-// example pagination object
+- var p = {current: nowPage, total: totalCnt}
+-// actual template
+.paginationcontrol
+form(action='/topic')
+  - if(p.current > 1)
+    a.page.page-first(href='/topic') &lt;&lt;
+    a.page.page-prev(href='/topic?nowPage=' + (p.current-1)) &lt;
+  - else
+    span.page.disabled.page-first <<
+    span.page.disabled.page-prev <
+  - for(var i = p.current-2; i <= p.current + 2; i++)
+    - if (i <= p.total && i > 0)
+      - if (i !== p.current)
+        input(type='submit' name='nowPage' value=i) 
+        //-a.page(href='/topic')=i
+      - else
+        span.page.current=i
+  - if(p.current < p.total)
+    a.page-next(href='/topic?nowPage=' + (p.current+1)) &gt;
+    a.page-last(href='/topic?nowPage=' + p.total) &gt;&gt;
+  - else
+    span.page.disabled.page-next &gt;
+    span.page.disabled.page-last &gt;&gt;

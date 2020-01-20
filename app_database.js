@@ -6,6 +6,7 @@ const { Pool, Client } = require("pg"); //postgres를 사용하기 위한 모듈
 var format = require("pg-format");
 var paginate = require("express-paginate"); //paging 처리 해보자
 var pagination = require("pagination");
+var util = require("util");
 
 //postgres db와 연결
 //node_test디비에 접근 한다는 소리
@@ -160,8 +161,10 @@ app.get("/topic", function(req, res) {
       } else {
         if (nowPage == null || nowPage == "" || nowPage <= 1) nowPage = 1;
         var totalCnt = res3.rows;
-        var total = totalCnt[0].count / 5;
-
+        var total = Math.floor(totalCnt[0].count / 5); //5개씩 출력하기 위한 pagination 설정
+        if (totalCnt[0].count % 5 > 0) {
+          total++;
+        }
         res.render("view", {
           topics: res2.rows,
           totalCnt: total,

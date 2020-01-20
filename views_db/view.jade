@@ -26,11 +26,11 @@ html
                 else
                     a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
         div
-            form(action='/topic')
-             -for(var i=1; i <=totalCnt; i++){
-                    input(type='submit' name='nowPage' value=i) 
-             -}
-            //-include pagination.jade
+            //- form(action='/topic')
+            //-  -for(var i=1; i <=totalCnt; i++){
+            //-         input(type='submit' name='nowPage' value=i) 
+            //-  -}
+            include ./includes/pagination.jade  
         article.card.border-primary
             h2.card-header welcome
             div.card-body
