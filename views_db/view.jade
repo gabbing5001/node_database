@@ -9,41 +9,46 @@ html
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
         script(src='/bootstrap/js/bootstrap.min.js')
     body
-        nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
-            div.navbar-brand Database node 
+            nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
+                div.navbar-brand Database node 
 
 
-        h1 
-            a(href='/topic') Server Side JavaScript
-        br
+            h1 
+                a(href='/topic') Server Side JavaScript
+            br
         div
-            form.form-inline
-                div.form-group.col-mb-8
-                    input(type='text' name='title' placeholder='title')#title.form-control
-                div.form-group.col-mb-4
-                    input(type='button' value="검색").btn.btn-primary 
-        button(type='button' value='내림차순' name='sort' onclick="location.href = '/topic/sort'" style="float:right;").btn.btn-outline-primary 내림차순
-        button(type='button' value='내림차순' name='sort' onclick="location.href = '/topic'" style="float:right;").btn.btn-outline-secondary 오름차순
-        br
-        br
-        div
-            ul.list-group 
-                each topic in topics 
-                    if details
-                        each detail in details
-                            if detail.id == topic.id
-                                a(href='/topic/'+topic.id).list-group-item.list-group-item-action.active= topic.title
-                            else
-                                a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
-                    else
-                        a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
-        br
-        - if(!sort)
-            include ./includes/pagination.jade
-        - else    
-            include ./includes/paginationSort.jade  
-        article.card.border-primary
-            h2.card-header welcome
-            div.card-body
-                p.card-text This is server side javascript tutorial
-                a(href='/topic/create').card-link create
+        form(action="http://localhost:3000/topicSearch")
+            div.form-group.col-mb-8
+                input(type='text' name='title' placeholder='title')#title.form-control
+            div.form-group.col-mb-4
+                input(type='submit' value="검색").btn.btn-primary 
+            div
+                button(type='button' value='내림차순' name='sort' onclick="location.href = '/topic/sort'" style="float:right;").btn.btn-outline-primary 내림차순
+                button(type='button' value='오름차순' onclick="location.href = '/topic'" style="float:right;").btn.btn-outline-secondary 오름차순
+            br
+            br
+            div
+                ul.list-group 
+                    each topic in topics 
+                        if details
+                            each detail in details
+                                if detail.id == topic.id
+                                    a(href='/topic/'+topic.id).list-group-item.list-group-item-action.active= topic.title
+                                else
+                                    a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
+                        else
+                            a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
+            br
+            - if(!title){
+                - if(!sort)
+                    include ./includes/pagination.jade
+                - else    
+                    include ./includes/paginationSort.jade  
+            -}else{
+                include ./includes/paginationSearch.jade
+            -}
+            article.card.border-primary
+                h2.card-header welcome
+                div.card-body
+                    p.card-text This is server side javascript tutorial
+                    a(href='/topic/create').card-link create
