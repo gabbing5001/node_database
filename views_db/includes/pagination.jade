@@ -10,7 +10,13 @@ form(action='/topic')
   - else
     span.page.disabled.page-first <<
     span.page.disabled.page-prev <
-  - for(var i = p.current-2; i <= p.current + 2; i++)
+  - var j = 2;
+  - var k = 2;
+  - if(p.current == 1 ){ j = 4 }
+  - else if(p.current == 2){ j = 3 }
+  - else if((p.current + 1) > p.total ){ k = 4 }
+  - else if((p.current + 2) > p.total ){ k = 3 }
+  - for(var i = p.current-k; i <= p.current + j; i++)
     - if (i <= p.total && i > 0)
       - if (i !== p.current)
         input(type='submit' name='nowPage' value=i) 
