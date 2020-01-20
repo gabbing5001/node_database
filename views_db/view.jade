@@ -15,22 +15,33 @@ html
 
         h1 
             a(href='/topic') Server Side JavaScript
-        ul.list-group 
-            each topic in topics 
-                if details
-                    each detail in details
-                        if detail.id == topic.id
-                            a(href='/topic/'+topic.id).list-group-item.list-group-item-action.active= topic.title
-                        else
-                            a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
-                else
-                    a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
+        br
         div
-            //- form(action='/topic')
-            //-  -for(var i=1; i <=totalCnt; i++){
-            //-         input(type='submit' name='nowPage' value=i) 
-            //-  -}
-            include ./includes/pagination.jade  
+            form.form-inline
+                div.form-group.col-mb-8
+                    input(type='text' name='title' placeholder='title')#title.form-control
+                div.form-group.col-mb-4
+                    input(type='button' value="검색").btn.btn-primary 
+        button(type='button' value='내림차순' name='sort' onclick="location.href = '/topic/sort'" style="float:right;").btn.btn-outline-primary 내림차순
+        button(type='button' value='내림차순' name='sort' onclick="location.href = '/topic'" style="float:right;").btn.btn-outline-secondary 오름차순
+        br
+        br
+        div
+            ul.list-group 
+                each topic in topics 
+                    if details
+                        each detail in details
+                            if detail.id == topic.id
+                                a(href='/topic/'+topic.id).list-group-item.list-group-item-action.active= topic.title
+                            else
+                                a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
+                    else
+                        a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
+        br
+        - if(!sort)
+            include ./includes/pagination.jade
+        - else    
+            include ./includes/paginationSort.jade  
         article.card.border-primary
             h2.card-header welcome
             div.card-body

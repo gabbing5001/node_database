@@ -174,6 +174,35 @@ app.get("/topic", function(req, res) {
     });
   });
 });
+app.get("/topic/sort", function(req, res) {
+  var nowPage = req.query.nowPage; //쿼리로 날아온 현재 페이지 저장
+  //전체 리스트를 띄우는 기본 리스트 화면
+  var sqlCnt = "select count(*) from topic";
+  var sql = "SELECT id, title FROM topic ORDER BY id desc limit 5 offset $1"; //offset 사용시 +1 열부터 limit 갯수만큼 가져옴
+  client.query(sqlCnt, function(err, res3) {
+    if (nowPage == null) nowPage = 1;
+    nowPage = Number(nowPage); //계산을 위해서 형변환
+    const page = nowPage * 5 - 5; //시작열
+    client.query(sql, [page], function(err, res2) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (nowPage == null || nowPage == "" || nowPage <= 1) nowPage = 1;
+        var totalCnt = res3.rows;
+        var total = Math.floor(totalCnt[0].count / 5); //5개씩 출력하기 위한 pagination 설정
+        if (totalCnt[0].count % 5 > 0) {
+          total++;
+        }
+        res.render("view", {
+          sort: 1,
+          topics: res2.rows,
+          totalCnt: total,
+          nowPage: nowPage
+        });
+      }
+    });
+  });
+});
 app.get("/topic/:id", function(req, res) {
   //detail 화면
   //전체 리스트 정보도 같이 출력된다.

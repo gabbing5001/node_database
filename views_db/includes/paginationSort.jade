@@ -6,9 +6,9 @@ nav(aria-label="Page navigation example")
   ul.pagination.justify-content-center
     - if(p.current > 1)
       li.page-item
-        a.page-link(href='/topic') &lt;&lt;
+        a.page-link(href='/topic/sort') &lt;&lt;
       li.page-item
-        a.page-link(href='/topic?nowPage=' + (p.current-1)) &lt;
+        a.page-link(href='/topic/sort?nowPage=' + (p.current-1)) &lt;
     - else
       li.page-item.disabled
         a.page-link &lt;&lt;
@@ -24,15 +24,15 @@ nav(aria-label="Page navigation example")
       - if (i <= p.total && i > 0)
         - if (i !== p.current)
           li.page-item
-            a.page-link(href='/topic?nowPage=' + i) #{i} 
+            a.page-link(href='/topic/sort?nowPage=' + i) #{i} 
         - else
           li.page-item.active
             a.page-link #{i}
     - if(p.current < p.total)
       li.page-item
-        a.page-link(href='/topic?nowPage=' + (p.current+1)) &gt;
+        a.page-link(href='/topic/sort?nowPage=' + (p.current+1)) &gt;
       li.page-item
-        a.page-link(href='/topic?nowPage=' + p.total) &gt;&gt;
+        a.page-link(href='/topic/sort?nowPage=' + p.total) &gt;&gt;
     - else
       li.page-item.disabled
         a.page-link &gt;
