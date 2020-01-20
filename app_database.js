@@ -180,7 +180,7 @@ app.get("/topicSearch", function(req, res) {
   //전체 리스트를 띄우는 기본 리스트 화면
   var sqlCnt = "select count(*) from topic where title like $1";
   var sql =
-    "SELECT id, title FROM topic where title LIKE $2 ORDER BY id limit 5 offset $1"; //offset 사용시 +1 열부터 limit 갯수만큼 가져옴
+    "SELECT id, title FROM topic where title LIKE '%'||$2||'%' ORDER BY id limit 5 offset $1"; //offset 사용시 +1 열부터 limit 갯수만큼 가져옴
   client.query(sqlCnt, [title], function(err, res3) {
     if (nowPage == null) nowPage = 1;
     nowPage = Number(nowPage); //계산을 위해서 형변환
