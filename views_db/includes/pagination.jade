@@ -2,30 +2,41 @@
 -// example pagination object
 - var p = {current: nowPage, total: totalCnt}
 -// actual template
-.paginationcontrol
-form(action='/topic')
-  - if(p.current > 1)
-    a.page.page-first(href='/topic') &lt;&lt;
-    a.page.page-prev(href='/topic?nowPage=' + (p.current-1)) &lt;
-  - else
-    span.page.disabled.page-first <<
-    span.page.disabled.page-prev <
-  - var j = 2;
-  - var k = 2;
-  - if(p.current == 1 ){ j = 4 }
-  - else if(p.current == 2){ j = 3 }
-  - else if((p.current + 1) > p.total ){ k = 4 }
-  - else if((p.current + 2) > p.total ){ k = 3 }
-  - for(var i = p.current-k; i <= p.current + j; i++)
-    - if (i <= p.total && i > 0)
-      - if (i !== p.current)
-        input(type='submit' name='nowPage' value=i) 
-        //-a.page(href='/topic')=i
-      - else
-        span.page.current=i
-  - if(p.current < p.total)
-    a.page-next(href='/topic?nowPage=' + (p.current+1)) &gt;
-    a.page-last(href='/topic?nowPage=' + p.total) &gt;&gt;
-  - else
-    span.page.disabled.page-next &gt;
-    span.page.disabled.page-last &gt;&gt;
+nav(aria-label="Page navigation example")
+  ul.pagination
+    - if(p.current > 1)
+      li.page-item
+        a.page-link(href='/topic') &lt;&lt;
+      li.page-item
+        a.page-link(href='/topic?nowPage=' + (p.current-1)) &lt;
+    - else
+      li.page-item.disabled
+        a.page-link &lt;&lt;
+      li.page-item.disabled
+        a.page-link &lt;
+    - var j = 2;
+    - var k = 2;
+    - if(p.current == 1 ){ j = 4 }
+    - else if(p.current == 2){ j = 3 }
+    - else if((p.current + 1) > p.total ){ k = 4 }
+    - else if((p.current + 2) > p.total ){ k = 3 }
+    - for(var i = p.current-k; i <= p.current + j; i++)
+      - if (i <= p.total && i > 0)
+        - if (i !== p.current)
+          li.page-item
+            a.page-link(href='/topic?nowPage=' + i) #{i} 
+          //- input(type='submit' name='nowPage' value=i).page-item 
+          //-a.page(href='/topic')=i
+        - else
+          li.page-item.disabled
+            a.page-link #{i}
+    - if(p.current < p.total)
+      li.page-item
+        a.page-link(href='/topic?nowPage=' + (p.current+1)) &gt;
+      li.page-item
+        a.page-link(href='/topic?nowPage=' + p.total) &gt;&gt;
+    - else
+      li.page-item.disabled
+        a.page-link &gt;
+      li.page-item.disabled
+        a.page-link &gt;&gt;
