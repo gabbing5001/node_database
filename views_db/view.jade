@@ -4,8 +4,10 @@ html
         meta(charset='utf-8')
         meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
         link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
         link(rel="stylesheet", href="/bootstrap/css/starter-template.css")
         link(rel='canonical', href="https://getbootstrap.com/docs/4.4/examples/starter-template/")
+        link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css")
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
         script(src='/bootstrap/js/bootstrap.min.js')
     body
@@ -19,25 +21,37 @@ html
         div
         form(action="http://localhost:3000/topicSearch")
             div.form-group.col-mb-8
+            - if(!title)
                 input(type='text' name='title' placeholder='title')#title.form-control
+            - else
+                input(type='text' name='title' placeholder='title' value=title)#title.form-control
             div.form-group.col-mb-4
                 input(type='submit' value="검색").btn.btn-primary 
+                button(type='button' onclick="location.href = '/topic'").btn.btn-outline-secondary
+                    i.fas.fa-redo
             div
                 button(type='button' value='내림차순' name='sort' onclick="location.href = '/topic/sort'" style="float:right;").btn.btn-outline-primary 내림차순
                 button(type='button' value='오름차순' onclick="location.href = '/topic'" style="float:right;").btn.btn-outline-secondary 오름차순
             br
             br
             div
-                ul.list-group 
-                    each topic in topics 
-                        if details
-                            each detail in details
-                                if detail.id == topic.id
-                                    a(href='/topic/'+topic.id).list-group-item.list-group-item-action.active= topic.title
-                                else
-                                    a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
-                        else
-                            a(href='/topic/'+topic.id).list-group-item.list-group-item-action= topic.title
+                table.table.table-hover
+                    thead
+                        tr
+                            th #
+                            th title
+                            th id
+                    tbody        
+                        each topic, index in topics
+                            tr
+                                th= nowPage+(4*(nowPage-1))+index
+                                td(onclick="location.href = '/topic/'+#{topic.id}")= topic.title
+                                td= topic.id
+                //- ul.list-group 
+                //-     each topic in topics
+                //-         span.list-group-item= topic.id
+                //-             a(href='/topic/'+topic.id).list-group-item-action= topic.title
+                                
             br
             - if(!title){
                 - if(!sort)

@@ -12,6 +12,7 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "express-paginate": "^1.0.0",
+    "glyphicons": "^0.2.0",
     "jade": "^1.11.0",
     "pagination": "^0.4.6",
     "pg": "^7.17.0",
