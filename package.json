@@ -17,7 +17,7 @@
     "pagination": "^0.4.6",
     "pg": "^7.17.0",
     "pg-format": "^1.0.4",
-    "underscore": "^1.9.1",
+    "underscore": "^1.12.1",
     "util": "^0.12.1"
   }
 }
